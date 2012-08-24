@@ -68,7 +68,8 @@ sub init_storage
 # $storage->title2name('title');
 sub title2name{ $_[0]{t2n}{$_[1]} }
 
-sub hash_t2n{ $_[0]{t2n} }
+sub hash_t2n { $_[0]{t2n} }
+sub all_infos{ values %{$_[0]{infos}} }
 
 # $test_info = $storage->test_with_title('title');
 sub test_with_title{ $_[0]{infos}{$_[0]{t2n}{$_[1]}} }
@@ -137,5 +138,8 @@ sub title          { $_[0]{title} }
 sub model          { $_[0]{model} }
 sub run_model_test { $_[0]{run_model_test} }
 sub base_model     { $_[0]{base_model}     }
+
+sub is_run  { $_[0]{name} =~ /^run-/ }
+sub is_check{ $_[0]{name} =~ /^check-/ }
 
 1;
