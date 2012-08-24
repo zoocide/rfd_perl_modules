@@ -49,10 +49,10 @@ sub init_storage
       my $base_model;     #base model for restart models
       while(<$f>){
         chomp; tr/\r//d;
-        if    (/^title\s*=\s*(.+?)\s*/){ $title = $1; }
-        elsif (/^model\s*=\s*(.+?)\s*/){ $model = $1; }
-        elsif (/^run_model_test\s*=\s*(.+?)\s*/){ $run_model_test = $1; }
-        elsif (/^restart_model_test\s*=\s*(.+?)\s*/){ $base_model = $1; }
+        if    (/^title\s*=\s*(.+?)\s*$/){ $title = $1; }
+        elsif (/^model\s*=\s*(.+?)\s*$/){ $model = $1; }
+        elsif (/^run_model_test\s*=\s*(.+?)\s*$/){ $run_model_test = $1; }
+        elsif (/^restart_model_test\s*=\s*(.+?)\s*$/){ $base_model = $1; }
       }
       close $f;
       if ($title){
