@@ -119,6 +119,8 @@ sub remove_unknown_titles
 
 
 package TestInfo;
+use File::Spec::Functions qw(splitpath catfile);
+use File::Basename qw(basename fileparse);
 
 sub new
 {
@@ -136,8 +138,20 @@ sub new
 sub name           { $_[0]{name}  }
 sub title          { $_[0]{title} }
 sub model          { $_[0]{model} }
+# for check-test
 sub run_model_test { $_[0]{run_model_test} }
+# the base of the restart model
 sub base_model     { $_[0]{base_model}     }
+# name of the base of the restart model
+sub base_model_name{ $_[0]{base_model}     }
+# 'model_file.rst'
+sub rst_fname      { (fileparse($_[0]{model}, qr/\..+/i))[0].'.rst' }
+# 'model_file.data'
+sub data_fname     { basename($_[0]{model}) }
+# 'model_dir_relative_to_resources_dir'
+sub model_dir      { (splitpath($_[0]{model}))[1] }
+# 'RESULTS/model_file.rst'
+sub rst_result     { catfile('RESULTS', $_[0]->rst_fname) }
 
 sub is_run  { $_[0]{name} =~ /^run-/ }
 sub is_check{ $_[0]{name} =~ /^check-/ }

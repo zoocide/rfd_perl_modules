@@ -28,7 +28,11 @@ sub tNav_bin    { catfile($_[0]->tNav_dir, 'build-con', 'build', 'tNavigator-con
 sub tNav_bin_dst{ catfile($_[0]->fstate_dir, 'build-tNavigator-con-release', 'tNavigator-con') }
 sub diff_bin    { catfile($_[0]->tNav_dir, 'utils', 'diff_rst', 'build', 'diff_rst.exe') }
 sub diff_bin_dst{ catfile($_[0]->fstate_dir, 'build-diff-rst-release', 'diff_rst.exe') }
+sub resources_dir{ catfile($_[0]->tests_dir, 'resources') }
+sub debug_dir   { 'debug' }
+sub etalon      { $_[0]{etalon} }
 
+# $db->copy_bins
 sub copy_bins
 {
   my $self = shift;
@@ -36,12 +40,28 @@ sub copy_bins
   m_copy($self->diff_bin, $self->diff_bin_dst);
 }
 
+# $db->load_etalon
+sub load_etalon
+{
+  my $self = shift;
+  my $conf_fname = 'states.conf';
+  $conf_fname = catfile($self->{states_dir}, $conf_fname);
+  open(my $f, '<', $conf_fname) || die "can`t open file '$conf_fname': $!\n";
+  while (<$f>){
+    if (/etalon\s*=\s*(\w+)/){ $self->{etalon} = $1 }
+  }
+  close $f;
+  $self->{etalon} || die "etalon is not set\n";
+}
+
 # m_copy($src, $dst)
 sub m_copy
 {
+  #print "copy '$_[0]' to '$_[1]'\n";
   copy($_[0], $_[1]) || die "can`t copy '$_[0]' to '$_[1]': $!\n";
 }
 
+# $self->m_load_main_settings('file.conf');
 sub m_load_main_settings
 {
   my ($self, $fconf) = @_;
