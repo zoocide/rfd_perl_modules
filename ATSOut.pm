@@ -48,7 +48,9 @@ sub _parse_output
     # dry-run
     elsif (/^Dry run: True/){ $dry_run = 1; }
     # skip
-    elsif (/^Options: {/){}
+    elsif (/^Options: {/
+         ||/^Applied '/
+         ||/^Previous options restored: {/){}
     # unknown string
     else { print "skipped: $_[0]\n"; }
   }
