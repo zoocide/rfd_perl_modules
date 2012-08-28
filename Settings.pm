@@ -1,7 +1,8 @@
 package Settings;
 use strict;
+use File::Path qw(mkpath);
 use File::Copy qw(copy);
-use File::Spec::Functions qw(catfile catdir splitdir);
+use File::Spec::Functions qw(catfile catdir splitdir splitpath);
 
 
 ## SYNOPSIS
@@ -23,7 +24,7 @@ sub states_dir  { $_[0]->{states_dir} }
 sub db_file     { 'tests_info' }
 sub failed_file { 'failed_ex.set' }
 sub tNav_dir    { $_[0]{tNav_dir} }
-sub fstate_dir  { catfile($_[0]->states_dir, '20110120') }
+sub fstate_dir  { catfile($_[0]->states_dir, '20000101') }
 sub tNav_bin    { catfile($_[0]->tNav_dir, 'build-con', 'build', 'tNavigator-con.exe') }
 sub tNav_bin_dst{ catfile($_[0]->fstate_dir, 'build-tNavigator-con-release', 'tNavigator-con') }
 sub diff_bin    { catfile($_[0]->tNav_dir, 'utils', 'diff_rst', 'build', 'diff_rst.exe') }
@@ -36,6 +37,8 @@ sub etalon      { $_[0]{etalon} }
 sub copy_bins
 {
   my $self = shift;
+  -d $self->states_dir || die "states_dir '".$self->states_dir." not exists\n";
+  mkdir $self->fstate_dir;
   m_copy($self->tNav_bin, $self->tNav_bin_dst);
   m_copy($self->diff_bin, $self->diff_bin_dst);
 }
@@ -57,6 +60,8 @@ sub load_etalon
 # m_copy($src, $dst)
 sub m_copy
 {
+  my $dst_dir = (splitpath($_[1]))[1];
+  -e $dst_dir || mkpath($dst_dir);
   #print "copy '$_[0]' to '$_[1]'\n";
   copy($_[0], $_[1]) || die "can`t copy '$_[0]' to '$_[1]': $!\n";
 }
