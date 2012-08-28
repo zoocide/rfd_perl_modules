@@ -12,14 +12,16 @@ sub new
     retrieve($fname)
   :
     {
-      fname   => $fname,
-      t2n => {},
-      infos => {},
+      fname   => $fname, # storage filename
+      t2n     => {},     # title => name
+      infos   => {},     # name => test_info
     };
   $self->{fname} = $fname;
   bless $self, $class;
 }
 
+# clear the storage
+# $storage->clear;
 sub clear
 {
   $_[0]{t2n} = {};
@@ -106,7 +108,7 @@ sub extend_test_set
   (@run, @check)
 }
 
-# @titles = $storage->clean_titles(@titles) # remove unknown titles
+# @titles = $storage->remove_unknown_titles(@titles) # remove unknown titles
 sub remove_unknown_titles
 {
   my $self = shift;
