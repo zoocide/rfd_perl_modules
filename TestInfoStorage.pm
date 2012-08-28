@@ -3,6 +3,7 @@ use strict;
 use Storable;
 use File::Spec;
 use File::Basename  qw(basename);
+use TestsSet;
 
 # $storage = TestInfoStorage->new('file_name');
 sub new
@@ -116,6 +117,17 @@ sub remove_unknown_titles
   return @_ if !@unknown_titles;
   print "unknown tests (try to reinitialize storage):\n", map "  '$_'\n", @unknown_titles;
   grep exists $self->{t2n}{$_}, @_;
+}
+
+# $storage->check_tests_set($tests_set)
+sub check_tests_set
+{
+  my ($self, $ts) = @_;
+  my @unknown_tests = grep !exists $self->{infos}{$_}, $ts->all;
+  if (@unknown_tests){
+    print "ERROR: unknown tests:\n", map "  $_\n", @unknown_tests;
+    die "Edit tests set and try again\n";
+  }
 }
 
 
