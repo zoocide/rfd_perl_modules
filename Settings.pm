@@ -32,6 +32,7 @@ sub diff_bin_dst{ catfile($_[0]->fstate_dir, 'build-diff-rst-release', 'diff_rst
 sub resources_dir{ catfile($_[0]->tests_dir, 'resources') }
 sub debug_dir   { 'debug' }
 sub etalon      { $_[0]{etalon} }
+sub conf_groups { catfile($_[0]->tests_dir, 'settings.conf') }
 
 # $db->copy_bins
 sub copy_bins

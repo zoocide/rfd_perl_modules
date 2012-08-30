@@ -1,5 +1,6 @@
 package TestsSet;
 use strict;
+use ConfGroups;
 
 # my $ts = TestsSet->new(@tests);
 sub new
@@ -56,6 +57,14 @@ sub join
                                (@{$_[0]{tests}}, @{$_[1]{tests}}));
   }
   $self;
+}
+
+# $ts->expand_groups('conf_groups_file');
+sub expand_groups
+{
+  my ($self, $fname) = @_;
+  my $grs = ConfGroups->new($fname);
+  @{$self->{tests}} = map { $grs->exists_group($_) ? $grs->group($_) : $_ } @{$self->{tests}};
 }
 
 1;
