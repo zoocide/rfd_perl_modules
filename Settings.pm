@@ -23,6 +23,7 @@ sub tests_dir   { $_[0]->{tests_dir} }
 sub states_dir  { $_[0]->{states_dir} }
 sub db_file     { 'tests_info' }
 sub failed_file { 'failed_ex.set' }
+sub fail_output { 'output.txt' }
 sub tNav_dir    { $_[0]{tNav_dir} }
 sub fstate_dir  { catfile($_[0]->states_dir, '20000101') }
 sub tNav_bin    { catfile($_[0]->tNav_dir, 'build-con', 'build', 'tNavigator-con.exe') }
