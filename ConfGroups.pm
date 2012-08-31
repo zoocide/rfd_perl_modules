@@ -7,7 +7,7 @@ use base qw(ConfMultiline);
 
 # my @items = $grs->group('group_name');
 sub exists_group { exists $_[0]{sections}{groups}{$_[1]} }
-sub group        { @{$_[0]{sections}{groups}{$_[1]}} }
+sub group        { m_expand_group($_[1], $_[0]{sections}{groups}) }
 
 # $self->init('conf_file');
 sub init
@@ -16,8 +16,6 @@ sub init
   $self->SUPER::init(@_);
   exists $self->{sections}{groups} || die "can`t find [groups] section in config file '$_[1]'\n";
   $self->m_split_groups_items;
-  my $sect = $self->{sections}{groups};
-  $sect->{$_} = [m_expand_group($_, $sect)] for keys %$sect;
 }
 
 # my @items = m_expand_group($gr_name, $section_hash);
