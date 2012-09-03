@@ -126,7 +126,7 @@ sub check_tests_set
   my @unknown_tests = grep !exists $self->{infos}{$_}, $ts->all;
   if (@unknown_tests){
     print "ERROR: unknown tests:\n", map "  $_\n", @unknown_tests;
-    die "Edit tests set and try again\n";
+    die "Edit tests set (or update DB with command `run.pl -i`) and try again\n";
   }
 }
 
