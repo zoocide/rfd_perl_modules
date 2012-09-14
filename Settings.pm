@@ -3,12 +3,15 @@ use strict;
 use File::Path qw(mkpath);
 use File::Copy qw(copy);
 use File::Spec::Functions qw(catfile catdir splitdir splitpath);
+use OSType;
 
 
 ## SYNOPSIS
 # my $conf = Settings->new;
 # my $failed_filename = $conf->failed_file;
 # ...
+
+our $bin_ext = OSType->is_win ? '.exe' : '';
 
 sub new
 {
@@ -26,7 +29,7 @@ sub failed_file { 'failed_ex.set' }
 sub fail_output { 'output.txt' }
 sub tNav_dir    { $_[0]{tNav_dir} }
 sub fstate_dir  { catfile($_[0]->states_dir, '20000101') }
-sub tNav_bin    { catfile($_[0]->tNav_dir, 'build-con', 'build', 'tNavigator-con.exe') }
+sub tNav_bin    { catfile($_[0]->tNav_dir, 'build-con', 'build', 'tNavigator-con'.$bin_ext) }
 sub tNav_bin_dst{ catfile($_[0]->fstate_dir, 'build-tNavigator-con-release', 'tNavigator-con') }
 sub diff_bin    { catfile($_[0]->tNav_dir, 'utils', 'diff_rst', 'build', 'diff_rst.exe') }
 sub diff_bin_dst{ catfile($_[0]->fstate_dir, 'build-diff-rst-release', 'diff_rst.exe') }
